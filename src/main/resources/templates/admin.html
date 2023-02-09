@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>Admin, welcome spring boot security page!</h1>
+
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>SurName</th>
+        <th>Age</th>
+        <th>Department</th>
+        <th>Username</th>
+        <th>Role</th>
+
+        <th>Action</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="user : ${listUsers}">
+        <td th:text="${user.Id}">Id</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.surName}">Surname</td>
+        <td th:text="${user.age}">Age</td>
+        <td th:text="${user.department}">Department</td>
+        <td th:text="${user.userName}">Username</td>
+        <td th:text="${user.getRoles()}">Roles</td>
+<!--        <td>-->
+<!--            th:each="role : ${user.getRoles()}" </td>-->
+<!--        <th:each items="${user.roles}" var="role">${role.name}; </th:each>Roles</td>-->
+
+<!--        <td>-->
+            <a th:href="@{/{id}(id = ${user.getId()})}">Edit</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/{id}(id = ${user.getId()})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+
+    </tr>
+
+</table>
+
+<hr/>
+<a href="/add-user"> Create new user</a>
+<a href="/logout">
+    <button type="button" class="btn btn-warning">Logout</button>
+</a>
+
+<!--Id: <p th:text="${user.id}">VALUE</p>-->
+<!--Name: <p th:text="${user.name}">VALUE</p>-->
+<!--Surname: <p th:text="${user.surName}">VALUE</p>-->
+<!--Age: <p th:text="${user.age}">VALUE</p>-->
+<!--Department: <p th:text="${user.department}">VALUE</p>-->
+
+<!--<a th:href="@{/{id}/edit(id=${user.getId()})}">Edit current user</a>-->
+
+<!--<form th:method="DELETE" th:action="@{/{id}(id=${user.getId()})}">-->
+<!--    <input type="submit" value="Delete"/>-->
+<!--</form>-->
+
+</body>
+</html>
