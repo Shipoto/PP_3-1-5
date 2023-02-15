@@ -17,43 +17,29 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-//@Transactional(readOnly = true)
 public class UserServiceImpl implements UserDetailsService {
-    @Autowired
     private UserDAO userDao;
 
-//    @Autowired
-//    public UserServiceImpl(UserDAO userDao) {
-//        this.userDao = userDao;
-//    }
-
-
-//    @PersistenceContext
-//    private EntityManager entityManager;
+    @Autowired
+    public UserServiceImpl(UserDAO userDao) {
+        this.userDao = userDao;
+    }
 
     @Autowired
     UserRepository userRepository;
-
-
 
     @Autowired
     RoleRepository roleRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-
-//    @Autowired
-//    public void setUserRepository(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -63,47 +49,35 @@ public class UserServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return user;
-//        return new org.springframework.security.core.userdetails.User(
-//                user.getUserName(),
-//                user.getPassword(),
-//                mapRolesToAuthorities(user.getRoles()));
+
     }
 
     @Transactional
     public void add(User user) {
-        userDao.add(user);
+        userRepository.save(user);
     }
-    // my
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<User> listUsers() {
-//        return userDao.getUsers();
-//    }
-    // other
+
     @Transactional(readOnly = true)
     public List<User> listUsers() {
         return userRepository.findAll();
     }
 
-//    @Override
     @Transactional(readOnly = true)
     public User getOneUser(int id) {
-        return userDao.getOneUser(id);
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
-//    @Override
     @Transactional
     public void delete(int id) {
-        userDao.delete(id);
+        userRepository.deleteById(id);
     }
 
-//    @Override
     @Transactional
-    public void update(int id, User user) {
-        userDao.update(id, user);
+    public void update(User user) {
+        user.setId(user.getId());
+        userRepository.save(user);
     }
-
-
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
@@ -116,7 +90,7 @@ public class UserServiceImpl implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
+        user.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;

@@ -1,13 +1,10 @@
 package ru.kata.spring.boot_security.demo.entity;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Table(name = "t_user")
@@ -32,16 +29,6 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
-
-
-//    @Column(name = "role")
-//    private String role;
-
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable( name = "users_roles",
-//            joinColumns = @JoinColumn( name = "user_id",
-//            referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn( name = "role_id", referencedColumnName = "id"))
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection <Role> roles;
@@ -151,7 +138,16 @@ public class User implements UserDetails {
     public Collection < Role > getRoles() {
         return roles;
     }
+
+
     public void setRoles(Collection < Role > roles) {
         this.roles = roles;
+    }
+
+    public String showRoles() {
+        StringBuilder builder = new StringBuilder();
+        roles.forEach(x -> builder.append(x.getName()).append(", "));
+        builder.delete(builder.length() - 2, builder.length());
+        return roles.size() > 0 ? builder.toString() : "";
     }
 }

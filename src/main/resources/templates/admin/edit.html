@@ -7,8 +7,8 @@
 </head>
 <body>
 /edit
-<form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
-    <h2>Edit user</h2>
+<form th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
+    <h2>Edit</h2>
 
     <label for="name">Type Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
@@ -21,6 +21,16 @@
     <br/>
     <label for="department">Type Department: </label>
     <input type="text" th:field="*{department}" id="department"/>
+    <br/>
+    <label for="username">Type Username: </label>
+    <input type="text" th:field="*{userName}" id="username"/>
+    <br/>
+    <label for="password">Type Password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <br/>
+    <br/>
+    <label for="roles">Type role 1 or 2 (1 - ADMIN, 2 - USER): </label>
+    <input type="text" th:field="*{roles}" id="roles"/>
     <br/>
     <input type="submit" value="Update!"/>
 </form>

@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.entity;
 
-import net.bytebuddy.asm.Advice;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -40,6 +39,11 @@ public class Role implements GrantedAuthority {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getName() {
