@@ -12,26 +12,32 @@
 
     <label for="name">Type Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
-    <br/>
+    <br>
     <label for="surName">Type SurName: </label>
     <input type="text" th:field="*{surName}" id="surName"/>
-    <br/>
+    <br>
     <label for="age">Type Age: </label>
     <input type="text" th:field="*{age}" id="age"/>
-    <br/>
+    <br>
     <label for="department">Type Department: </label>
     <input type="text" th:field="*{department}" id="department"/>
-    <br/>
+    <br>
     <label for="username">Type Username: </label>
     <input type="text" th:field="*{userName}" id="username"/>
-    <br/>
+    <br>
     <label for="password">Type Password: </label>
     <input type="text" th:field="*{password}" id="password"/>
-    <br/>
-    <br/>
-    <label for="roles">Type role 1 or 2 (1 - ADMIN, 2 - USER): </label>
-    <input type="text" th:field="*{roles}" id="roles"/>
-    <br/>
+    <br>
+    <br>
+        <th:block th:each="role : ${roles}">
+            <input type="checkbox" name="roles"
+            th:text="${role.name}"
+            th:value="${role.id}"
+            th:field="*{roles}"
+            />
+        </th:block>
+
+    <br>
     <input type="submit" value="Update!"/>
 </form>
 

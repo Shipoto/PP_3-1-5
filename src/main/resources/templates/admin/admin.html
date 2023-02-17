@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>Spring Security Example</title>
 </head>
 <body>
+<body>
+<div layout:fragment="body"></div>
+
+<footer layout:fragment="body"></footer>
+</body>
+
+
 <h1>Admin, welcome spring boot security page!</h1>
 
 <table>

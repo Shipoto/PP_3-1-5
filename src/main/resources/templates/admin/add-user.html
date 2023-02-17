@@ -6,7 +6,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-/add-user
 
 <form th:method="POST" th:action="@{/}" th:object="${user}" >
 
@@ -14,16 +13,32 @@
 
     <label for="name">Type Name: </label>
     <input type="text" th:field="*{name}" id="name"/>
-    <br/>
+    <br>
     <label for="surName">Type SurName: </label>
     <input type="text" th:field="*{surName}" id="surName"/>
-    <br/>
+    <br>
     <label for="age">Type Age: </label>
     <input type="text" th:field="*{age}" id="age"/>
-    <br/>
+    <br>
     <label for="department">Type Department: </label>
     <input type="text" th:field="*{department}" id="department"/>
-    <br/>
+    <br>
+    <label for="username">Type Username: </label>
+    <input type="text" th:field="*{userName}" id="username"/>
+    <br>
+    <label for="password">Type Password: </label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <br>
+
+    <th:block th:each="role : ${roles}">
+        <input type="checkbox" name="roles"
+               th:text="${role}"
+               th:value="${role.id}"
+               th:field="*{roles}"
+        />
+    </th:block>
+    <br>
+
     <input type="submit" value="Create!"/>
 
 </form>

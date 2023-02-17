@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
 
 @Entity
@@ -65,5 +66,12 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return getName();
+    }
+
+    public static Collection<Role> getAllRoles() {
+        return Arrays.asList(
+                new Role(1, "ROLE_ADMIN"),
+                new Role(2, "ROLE_USER")
+        );
     }
 }

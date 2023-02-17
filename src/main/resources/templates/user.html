@@ -4,26 +4,28 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
 
-<form th:action="@{/{id}(id=${user.getId()})}" th:object="${user}" th:method="PATCH">
-    <h2>Current user</h2>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>SurName</th>
+        <th>Age</th>
+        <th>Department</th>
+        <th>Username</th>
+        <th>Roles</th>
+    </tr>
 
-    <label for="name">Type Name: </label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <br/>
-    <label for="surName">Type SurName: </label>
-    <input type="text" th:field="*{surName}" id="surName"/>
-    <br/>
-    <label for="age">Type Age: </label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <br/>
-    <label for="department">Type Department: </label>
-    <input type="text" th:field="*{department}" id="department"/>
-    <br/>
-
-</form>
-
+    <tr th:each="user : ${user}">
+        <td th:text="${user.id}">Id</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.surName}">Surname</td>
+        <td th:text="${user.age}">Age</td>
+        <td th:text="${user.department}">Department</td>
+        <td th:text="${user.userName}">Username</td>
+        <td th:text="${user.roles}">Roles</td>
+    </tr>
+</table>
 <hr/>
 
 <a href="/logout">

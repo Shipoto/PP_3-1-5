@@ -30,6 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
+                .antMatchers("/bootstrap").permitAll()
+                .antMatchers("/api/bootstrap/**").permitAll()
+
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()

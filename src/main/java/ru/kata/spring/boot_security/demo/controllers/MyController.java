@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import ru.kata.spring.boot_security.demo.entity.User;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.security.Principal;
@@ -21,9 +22,23 @@ public class MyController {
         this.userServiceImpl = userServiceImpl;
     }
 
+    // BOOTSTRAP
+    @GetMapping("/bootstrap")
+    public String bootstrap(Model model, Principal principal){
+        model.addAttribute("listUsers", userServiceImpl.listUsers());
+        model.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
+
+        return "admin/bootstrap";
+    }
+
+    @GetMapping()
+    public String index() {
+        return "index";
+    }
+
     @GetMapping("/user")
     public String user(Model model, Principal principal){
-        model.addAttribute("user", userServiceImpl.getOneUser(1));
+        model.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
         return "user";
     }
 
@@ -42,6 +57,7 @@ public class MyController {
     @GetMapping(value = "admin/{id}")
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServiceImpl.getOneUser(id));
+        model.addAttribute("roles", userServiceImpl.getOneUser(id).getRoles());
         return "/admin/edit";
     }
 
@@ -51,14 +67,10 @@ public class MyController {
         return "redirect:/admin";
     }
 
-    @GetMapping()
-    public String index() {
-        return "index";
-    }
-
     @GetMapping("admin/add-user")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("roles", Role.getAllRoles());
         return "admin/add-user";
     }
 
