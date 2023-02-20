@@ -26,7 +26,16 @@ public class MyController {
     @GetMapping("/bootstrap")
     public String bootstrap(Model model, Principal principal){
         model.addAttribute("listUsers", userServiceImpl.listUsers());
+
+//        model.addAttribute("user", userServiceImpl.getOneUser(20));
+//        model.addAttribute("roles", userServiceImpl.getOneUser(20).getRoles());
+
+
         model.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
+//        model.addAttribute("roles", userServiceImpl.loadUserByUsername(principal.getName());
+        model.addAttribute("roles", Role.getAllRoles());
+//
+
 
         return "admin/bootstrap";
     }
@@ -57,7 +66,9 @@ public class MyController {
     @GetMapping(value = "admin/{id}")
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServiceImpl.getOneUser(id));
-        model.addAttribute("roles", userServiceImpl.getOneUser(id).getRoles());
+        model.addAttribute("roles", Role.getAllRoles());
+
+
         return "/admin/edit";
     }
 
