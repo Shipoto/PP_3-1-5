@@ -16,6 +16,7 @@ public interface UserService extends UserDetailsService {
     void delete(int id);
     void update(User user);
 
+
     UserDetails loadUserByUsername(String username);
 
     public boolean saveUser(User user);

@@ -31,15 +31,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
 
+
+
                 .authorizeRequests()
 
                 .antMatchers("/bootstrap").permitAll()
-                .antMatchers("/api/rest/**").permitAll()
+                .antMatchers("/api/users/**").permitAll()
 
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                // for 3-1-3 task
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+
                 .antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
@@ -48,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
+    // use this encoder
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userServiceImpl).passwordEncoder(bCryptPasswordEncoder());
