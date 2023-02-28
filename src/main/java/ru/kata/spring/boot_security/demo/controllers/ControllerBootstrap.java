@@ -18,26 +18,15 @@ public class ControllerBootstrap {
 
     @Autowired
     public ControllerBootstrap(UserServiceImpl userServiceImpl) {
-
         this.userServiceImpl = userServiceImpl;
     }
 
-    // BOOTSTRAP
     @GetMapping()
     public String bootstrap(Model model, Principal principal){
         model.addAttribute("listUsers", userServiceImpl.listUsers());
-
-//        model.addAttribute("user", userServiceImpl.getOneUser(20));
-//        model.addAttribute("userRoles", userServiceImpl.loadUserByUsername(principal.getName());
-
-
         model.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
         model.addAttribute("roles", Role.getAllRoles());
-//        model.addAttribute("userRoles", userServiceImpl.getOneUser(id).getRoles());
         model.addAttribute("userRoles", userServiceImpl.loadUserByUsername(principal.getName()));
-
-
-
         return "/admin/users";
     }
 
@@ -55,7 +44,7 @@ public class ControllerBootstrap {
     @GetMapping("/admin")
     public String admin(Model model){
         model.addAttribute("listUsers", userServiceImpl.listUsers());
-        return "admin/";
+        return "admin/users";
     }
 
     @GetMapping("/{id}")
@@ -68,8 +57,6 @@ public class ControllerBootstrap {
     public String editUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userServiceImpl.getOneUser(id));
         model.addAttribute("roles", Role.getAllRoles());
-
-
         return "/admin/edit";
     }
 

@@ -30,17 +30,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-
-
-
                 .authorizeRequests()
 
-                .antMatchers("/bootstrap").permitAll()
+                // for rest task
                 .antMatchers("/api/users/**").permitAll()
 
                 // for 3-1-3 task
 //                .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+
+                // for 3-1-4 bootstrap task
+                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/users/user").hasAnyRole("ADMIN", "USER")
 
                 .antMatchers("/").permitAll()
 //                .anyRequest().authenticated()

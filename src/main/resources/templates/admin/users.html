@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
 
     <!-- Required meta tags -->
@@ -16,7 +14,6 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<!--<h1>Admin, welcome spring boot security page!</h1>-->
 
 <!--header-->
 <div class="p-3 mb-2 bg-dark text-light">
@@ -42,10 +39,7 @@
 
         <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile"
            role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
-        <!--    <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">del</a>-->
-        <!--    <a class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">del</a>-->
     </div>
-
 
     <!--  LEFT NAVBAR SECOND-->
     <div class="container-sm bg-light">
@@ -53,7 +47,6 @@
             <!--ADMIN LEFT NAVBAR-->
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <h3>Admin panel</h3>
-
 
                 <!-- JS RIGHT NAVBAR HORIZONTAL START==================-->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -70,9 +63,8 @@
                         </button>
                     </li>
                 </ul>
-
+                 <!--                RIGHT USERS TABLE LINK HORIZONTAL-->
                 <div class="tab-content" id="myTabContent">
-                    <!--                RIGHT USERS TABLE LINK HORIZONTAL-->
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
                         <!-- USERS TABLE START-->
@@ -85,7 +77,6 @@
                                 <hr/>
                                 <table class="table table-striped align-middle">
                                     <tr>
-                                        <!--            <th scope="col">Id</th>-->
                                         <th scope="col">Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">SurName</th>
@@ -107,10 +98,6 @@
                                         <td th:text="${user.userName}">Username</td>
                                         <td th:text="${user.roles}">Roles</td>
 
-<!--                                        <div/>-->
-                                        <!--            <div/>-->
-
-                                        <!--            <td><a th:href="@{/admin/{id}(id = ${user.getId()})}">Edit</a></td>-->
                                         <td>
                                             <!-- Button EDIT trigger MODAL -->
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -125,13 +112,6 @@
                                             >Delete
                                             </button>
                                         </td>
-
-<!--                                        <td>-->
-<!--                                            <button type="submit" name="addRow" value="Submit"-->
-<!--                                                    th:method="DELETE"-->
-<!--                                                    th:action="@{/{id}(id = ${user.getId()})}">Add row-->
-<!--                                            </button>-->
-<!--                                        </td>-->
 
                                         <!-- Modal EDIT START-->
                                         <div class="modal fade" tabindex="-1" th:id="'exampleModal'+${user.id}"
@@ -333,19 +313,16 @@
 
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- Modal DELETE USER END-->
+                                        </div> <!-- Modal DELETE USER END-->
+
 
                                     </tr>
 
                                 </table>
                             </div>
-                        </div><!-- USERS TABLE END-->
+                        </div> <!-- USERS TABLE END-->
                         1
                     </div>
-<!--                </div>-->
-<!--            </div> &lt;!&ndash;ADMIN LEFT NAVBAR&ndash;&gt;-->
-
 
                     <!-- NEW USER HORIZONTAL-->
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -388,10 +365,7 @@
                                 <option th:each="role : ${roles}"
                                         th:value="${role.id}"
                                         th:text="${role.name}">
-                                    <!--                                        th:text="#{${role}}">Wireframe-->
-                                    <!--                                        value="1" >ADMIN-->
                                 </option>
-                                <!--                                <option value="2">USER</option>-->
                             </select>
 
                             <input type="submit" class="btn btn-success" value="Add new user"/>
@@ -399,17 +373,14 @@
                         </form>
                         2
                     </div> <!-- NEW USER HORIZONTAL END-->
-                </div>
+                </div> <!-- HORIZONTAL TAB END-->
             </div> <!--ADMIN LEFT NAVBAR END-->
 
                 <!-- JS NAVBAR HORIZONTAL END==================-->
 
-
                 <!-- USER  LEFT NAVBAR START-->
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                 <h3>User information-page</h3>
-
-
                 Users table
                 <div class="container-sm bg-white">
                         <br>
@@ -440,8 +411,6 @@
                             </tr>
                             </tbody>
                         </table>
-                        <!--                    </table>-->
-
                 </div>
 
             </div> <!-- USER  LEFT NAVBAR END-->

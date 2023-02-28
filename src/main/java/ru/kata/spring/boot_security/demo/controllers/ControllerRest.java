@@ -23,7 +23,6 @@ public class ControllerRest {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<List<User>> rest(){
         return new ResponseEntity<>(userServiceImpl.listUsers(), HttpStatus.OK);
 //        return "/admin/users";
