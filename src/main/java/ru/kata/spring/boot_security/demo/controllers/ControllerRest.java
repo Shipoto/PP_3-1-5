@@ -34,9 +34,11 @@ public class ControllerRest {
 //    }
 
     @GetMapping("/user")
-    public ResponseEntity<User> user(/*Principal principal*/){
+    public ResponseEntity<User> user(Principal principal){
 //        User user = (User) userServiceImpl.loadUserByUsername(principal.getName());
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        User user = (User) userServiceImpl.loadUserByUsername("zzz");
+        System.out.println(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 //    @GetMapping("/admin")
@@ -67,10 +69,16 @@ public class ControllerRest {
 //        return "admin/add-user";
 //    }
 
+//    @PostMapping()
+//    public String create(@ModelAttribute("user") User user) {
+//        userServiceImpl.add(user);
+//        return "redirect:/users";
+//    }
+
     @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
+    public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {
         userServiceImpl.add(user);
-        return "redirect:/users";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

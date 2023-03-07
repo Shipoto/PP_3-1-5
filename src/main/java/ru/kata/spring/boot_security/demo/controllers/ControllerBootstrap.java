@@ -27,6 +27,7 @@ public class ControllerBootstrap {
         model.addAttribute("user", userServiceImpl.loadUserByUsername(principal.getName()));
         model.addAttribute("roles", Role.getAllRoles());
         model.addAttribute("userRoles", userServiceImpl.loadUserByUsername(principal.getName()));
+        model.addAttribute("newUser", new User());
         return "/admin/users";
     }
 
@@ -75,7 +76,9 @@ public class ControllerBootstrap {
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
+        System.out.println(user);
         userServiceImpl.add(user);
+
         return "redirect:/users";
     }
 
