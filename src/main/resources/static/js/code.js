@@ -19,17 +19,13 @@ console.log('answer' + newUser)
 // triggerEl).show()
 
 
-
-
 let option = ''
-
-
-
 
 // create users table
 const showUsers = (users) => {
+    let count = 0
     users.forEach(user => {
-        results += `<tr>
+        results += `<tr >
                         <th>${user.id}</th>
                         <td>${user.name}</td>
                         <td>${user.surName}</td>
@@ -38,29 +34,27 @@ const showUsers = (users) => {
                         <td>${user.username}</td>
                         <td>${user.roles.map(role => role.name.substring(5))}     </td>
 
-                        <td><button type="button" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" >
+                        <td><button type="button" data-id="${count}" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" >
                         Edit
                             </button></td>
 
-                        <td><button type="button" id="btnDelete" class="btn btn-danger" data-bs-toggle="modal" >
+                        <td><button type="button"  id="btnDelete" class="btn btn-danger" data-bs-toggle="modal" >
                             Delete
                             </button></td>    
-
-                        
-                </tr>
-                `
-        //<td><button type="button" class="text-center"><a class="btnEdit1 btn btn-primary"></a>Ed</td>
-        // <td>${user.Delete}    <a class="btnDelete"></a>Delete</td>
+                    </tr>
+                    `
+        count += 1
     })
 
     container.innerHTML = results
+
 }
 
 
 // fetch and typing users table
 
-async function getMainPage() {
-    await fetch(url, {
+function getMainPage() {
+    fetch(url, {
         // mode: 'no-cors',
         method: 'GET',
         headers: {
@@ -136,19 +130,16 @@ const curUs = (id) => {fetch(url + id)
     })
 }
 
+// BUTTONS
 // catching button
 const on = (element, event, button, handler) => {
     // console.log(handler)
     element.addEventListener(event, e => {
-        // event.preventDefault();
         if(e.target.closest(button)) {
             handler(e)
         }
     })
 }
-
-
-
 
 
 
@@ -189,8 +180,8 @@ function getRoles(role1, role2) {
     let userRoles = [];
     const roleAdmin = {id:1, name:'ROLE_ADMIN'};
     const roleUser = {id:2, name:'ROLE_USER'};
-    alert(role1)
-    alert(role2)
+    // alert(role1)
+    // alert(role2)
     // alert(roles[1].value)
     if (role1) {
         userRoles.push(roleAdmin)
@@ -203,18 +194,18 @@ function getRoles(role1, role2) {
 
 // Roles for current edited User
 
-function getUserRoles(rolesForm) {
-    alert(rolesForm)
-    let currentUserRoles = []
-    const roleAdmin = {id:1, name:'ROLE_ADMIN'};
-    const roleUser = {id:2, name:'ROLE_USER'};
-    if (rolesForm.includes('ADMIN')) {
-        currentUserRoles.push(roleAdmin)
-    } if (rolesForm.includes('USER')) {
-        currentUserRoles.push(roleUser)
-    }
-    return currentUserRoles
-}
+// function getUserRoles(rolesForm) {
+//     alert(rolesForm)
+//     let currentUserRoles = []
+//     const roleAdmin = {id:1, name:'ROLE_ADMIN'};
+//     const roleUser = {id:2, name:'ROLE_USER'};
+//     if (rolesForm.includes('ADMIN')) {
+//         currentUserRoles.push(roleAdmin)
+//     } if (rolesForm.includes('USER')) {
+//         currentUserRoles.push(roleUser)
+//     }
+//     return currentUserRoles
+// }
 
 // pushing button Edit and scraping data from every table's row
 // let rolesForm = '';
@@ -230,6 +221,9 @@ on(document, 'click', '#btnEdit', e => {
     const departmentForm = idRow.children[4].innerHTML
     const userNameForm = idRow.children[5].innerHTML
     const rolesForm = idRow.children[6].innerHTML
+
+    const count_id = idRow.children[7].children[0].getAttribute('data-id')
+    // alert(count_id)
     // alert(rolesForm)
 
 
@@ -240,19 +234,32 @@ on(document, 'click', '#btnEdit', e => {
     department.value = departmentForm
     userName.value = userNameForm
 
+    roles.options[0].selected = false
+    roles.options[1].selected = false
+
     if (rolesForm.includes('ADMIN')) {roles.options[0].selected = true}
     if (rolesForm.includes('USER')) {roles.options[1].selected = true}
-    // roles.options[0].selected = true
-    // roles.options[1].selected = true
 
-    // roles.roles = [{id:1, name:'ROLE_ADMIN'}]
-    // console.log(getRoles(rolesForm))
 
     option = 'edit'
     editModal.show()
     formEdit = document.forms["modalEditForm"];
     formEdit.addEventListener('submit', saveEditedUser)
     // console.log(formEdit)
+
+
+    function showUsersString(name, surName, age, department, userName, roles, count_id) {
+        // console.log(roles)
+        let rowId = document.getElementById('tbodyTable').children[count_id]
+        rowId.children[1].innerText = name
+        rowId.children[2].innerText = surName
+        rowId.children[3].innerText = age
+        rowId.children[4].innerText = department
+        rowId.children[5].innerText = userName
+        rowId.children[6].innerText = roles.map(role => role.name.substring(5))
+
+
+    }
 
     function saveEditedUser(e) {
         e.preventDefault()
@@ -265,27 +272,35 @@ on(document, 'click', '#btnEdit', e => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id:idForm,
-                name:formEdit.nameEdit.value,
-                surName:formEdit.surName.value,
-                age:formEdit.age.value,
-                department:formEdit.department.value,
-                userName:formEdit.userName.value,
-                // password:formEdit.password.value,
-                // roles:{id: 1, name: 'ROLE_ADMIN'}
-                // roles:[{id:1, name:'ADMIN_ROLE'}, {id:2, name:'USER_ROLE'}]
-                // roles:getUserRoles(document.forms["rolesEdited"]),
-                roles:getRoles(formEdit.roles.options[0].selected,
+                id: idForm,
+                name: formEdit.nameEdit.value,
+                surName: formEdit.surName.value,
+                age: formEdit.age.value,
+                department: formEdit.department.value,
+                userName: formEdit.userName.value,
+                roles: getRoles(formEdit.roles.options[0].selected,
                     formEdit.roles.options[1].selected)
-
-                // roles:getRoles(alert(rolesForm))
             })
-        })
-// }).then(() => showUsers())
+            // })
+            // =========== RELOAD ONE STRING =============
+        }).then(() => showUsersString(
+            formEdit.nameEdit.value,
+            formEdit.surName.value,
+            formEdit.age.value,
+            formEdit.department.value,
+            formEdit.userName.value,
+            getRoles(formEdit.roles.options[0].selected,
+                formEdit.roles.options[1].selected),
+            count_id
+        ))
+        // })
+        // .then(response => response.json())
+        // .then(response => window.location.reload())
+        editModal.hide()
     }
-
-
 })
+
+
 
 
 

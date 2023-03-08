@@ -153,3 +153,4 @@ public class User implements UserDetails {
         return roles.size() > 0 ? builder.toString() : "";
     }
 }
+
