@@ -1,5 +1,7 @@
 const url = 'http://localhost:8080/api/users/'
 const container = document.getElementById('tbodyTable')
+const container1 = document.getElementById('tbodyTable1')
+
 const containerNewUser = document.getElementById('tbodyNewUser')
 let results = ''
 
@@ -14,10 +16,6 @@ const triggerEl = document.querySelector('#myTab button[data-bs-target="#newUser
 const newUser1 = bootstrap.Tab.getInstance(triggerEl)
 
 console.log('answer' + newUser)
-// const newUser = bootstrap.Tab(document
-//     .querySelector('#v-pills-tabContent'[href="#profile"]')
-// triggerEl).show()
-
 
 let option = ''
 
@@ -45,14 +43,11 @@ const showUsers = (users) => {
                     `
         count += 1
     })
-
     container.innerHTML = results
-
 }
 
 
 // fetch and typing users table
-
 function getMainPage() {
     fetch(url, {
         // mode: 'no-cors',
@@ -76,8 +71,6 @@ fetch(url + "user")
         showUser(currentUser);
     })
 
-
-
 // show current user
 const showUser = (user) => {
     let res = "";
@@ -95,14 +88,19 @@ const showUser = (user) => {
     document.getElementById("tbodyCurrentUser").innerHTML = res;
 }
 
-
-
-
-
+// HEADER
+function header (id) {fetch(url + 'user')
+    .then(res => res.json())
+    .then(data => {
+        let user = data;
+        let res = `${user.name}` + ' with roles: ' + `${user.roles.map(role => role.name.substring(5))}`
+        // console.log("DATA", user.name)
+        document.getElementById("header").innerText = res
+    })
+}
+header()
 
 // show user by ID
-
-
 const showUserById = (user) => {
     let res = "";
     res += `<div>
@@ -140,9 +138,6 @@ const on = (element, event, button, handler) => {
         }
     })
 }
-
-
-
 
 // pushing button Delete
 on(document, 'click', '#btnDelete', e => {
@@ -192,21 +187,6 @@ function getRoles(role1, role2) {
     return userRoles
 }
 
-// Roles for current edited User
-
-// function getUserRoles(rolesForm) {
-//     alert(rolesForm)
-//     let currentUserRoles = []
-//     const roleAdmin = {id:1, name:'ROLE_ADMIN'};
-//     const roleUser = {id:2, name:'ROLE_USER'};
-//     if (rolesForm.includes('ADMIN')) {
-//         currentUserRoles.push(roleAdmin)
-//     } if (rolesForm.includes('USER')) {
-//         currentUserRoles.push(roleUser)
-//     }
-//     return currentUserRoles
-// }
-
 // pushing button Edit and scraping data from every table's row
 // let rolesForm = '';
 let idForm = 0;
@@ -223,9 +203,6 @@ on(document, 'click', '#btnEdit', e => {
     const rolesForm = idRow.children[6].innerHTML
 
     const count_id = idRow.children[7].children[0].getAttribute('data-id')
-    // alert(count_id)
-    // alert(rolesForm)
-
 
     // typing data in fields modal's window
     nameEdit.value = nameForm
@@ -236,17 +213,14 @@ on(document, 'click', '#btnEdit', e => {
 
     roles.options[0].selected = false
     roles.options[1].selected = false
-
     if (rolesForm.includes('ADMIN')) {roles.options[0].selected = true}
     if (rolesForm.includes('USER')) {roles.options[1].selected = true}
-
 
     option = 'edit'
     editModal.show()
     formEdit = document.forms["modalEditForm"];
     formEdit.addEventListener('submit', saveEditedUser)
-    // console.log(formEdit)
-
+    // alert(formEdit)
 
     function showUsersString(name, surName, age, department, userName, roles, count_id) {
         // console.log(roles)
@@ -257,14 +231,11 @@ on(document, 'click', '#btnEdit', e => {
         rowId.children[4].innerText = department
         rowId.children[5].innerText = userName
         rowId.children[6].innerText = roles.map(role => role.name.substring(5))
-
-
     }
 
     function saveEditedUser(e) {
         e.preventDefault()
         let newUserRoles = []
-        // alert('SAVEE')
 
         fetch(url, {
             method: 'PUT',
@@ -300,28 +271,15 @@ on(document, 'click', '#btnEdit', e => {
     }
 })
 
-
-
-
-
 // PUSH TAB NEW USER
 on(document, 'click', '#newUserTab', e => {
-        // alert('klik')
         const roles = document.getElementById('rolesNew')
-        // console.log(roles)
         roles.value = [{id:1, name:'ROLE_ADMIN'}, {id:2, name:'ROLE_USER'}]
-        // console.log('rolesNew', rolesNew)
     }
 )
 
-
 // pushing AddNewUser submit button
 const form = document.forms["formNewUser"];
-
-
-
-
-// console.log(form)
 form.addEventListener('submit', addNewUser)
 
 function addNewUser(e) {
@@ -341,16 +299,10 @@ function addNewUser(e) {
             userName:form.userName.value,
             password:form.password.value,
             roles:getRoles(form.roles.options[0].selected, form.roles.options[1].selected)
-            // roles:[{id:1, name:'ROLE_ADMIN'},{id:2, name:'ROLE_USER'}]
-
-
-            // roles:{id: 1, name: 'ROLE_ADMIN'}
-            // roles:[{id:1, name:'ROLE_ADMIN'}]
-            // roles:getRoles([ADMIN, USER])
         })
-    })
+    // })
 
-// }).then(() => showUsers())
+}).then(() => showUsers())
 }
 
 

@@ -11,7 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/api/users")
 @RestController
 public class ControllerRest {
@@ -25,27 +25,14 @@ public class ControllerRest {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> rest(){
         return new ResponseEntity<>(userServiceImpl.listUsers(), HttpStatus.OK);
-//        return "/admin/users";
     }
-
-//    @GetMapping("/index")
-//    public String index() {
-//        return "index";
-//    }
 
     @GetMapping("/user")
     public ResponseEntity<User> user(Principal principal){
-//        User user = (User) userServiceImpl.loadUserByUsername(principal.getName());
-        User user = (User) userServiceImpl.loadUserByUsername("zzz");
+        User user = (User) userServiceImpl.loadUserByUsername(principal.getName());
         System.out.println(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
-//    @GetMapping("/admin")
-//    public String admin(Model model){
-//        model.addAttribute("listUsers", userServiceImpl.listUsers());
-//        return "admin/";
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
@@ -57,23 +44,6 @@ public class ControllerRest {
         userServiceImpl.update(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    @PatchMapping("admin/{id}")
-//    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
-//        userServiceImpl.update(user);
-//        return "redirect:/users";
-//    }
-
-//    @GetMapping("admin/add-user")
-//    public String addUser() {
-//        return "admin/add-user";
-//    }
-
-//    @PostMapping()
-//    public String create(@ModelAttribute("user") User user) {
-//        userServiceImpl.add(user);
-//        return "redirect:/users";
-//    }
 
     @PostMapping()
     public ResponseEntity<HttpStatus> createUser(@RequestBody User user) {

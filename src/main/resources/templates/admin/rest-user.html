@@ -28,13 +28,9 @@
 <div class="p-3 mb-2 bg-dark text-light">
 
     <div class="d-flex justify-content-between">
-        <!--        <b th:each="u : ${user}">-->
-<!--        <b th:text="${user} + ' with roles: ' + ${user.getAuthorities()}"></b></b>-->
         <b id="header">roles</b></b>
         <a href="/logout">Logout</a>
     </div>
-
-
 </div>
 <!--header-->
 
@@ -43,11 +39,11 @@
 <div class="d-flex align-items-start">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
-        <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home"
-           role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
+        <a class="nav-link" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home"
+           role="tab" aria-controls="v-pills-home" aria-selected="false" disabled="true">Admin</a>
 
-        <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile"
-           role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
+        <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile"
+           role="tab" aria-controls="v-pills-profile" aria-selected="true">User</a>
 
     </div>
 
@@ -56,7 +52,7 @@
     <div class="container-sm bg-light">
         <div class="tab-content" id="v-pills-tabContent">
             <!--ADMIN LEFT NAVBAR-->
-            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <div class="tab-pane fade" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                 <h3>Admin panel</h3>
 
 
@@ -76,7 +72,7 @@
 
                 <!-- users table tab -->
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="usersTableTab">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="usersTableTab">111
 
                         <!-- ===========================TABLE=================================-->
 
@@ -121,6 +117,9 @@
                         <!-- =========================== EDIT MODAL WINDOW=================================-->
 
                         <!-- Button trigger modal -->
+                        <button type="button" id="btnModalEdit" class="btn btn-primary" data-bs-toggle="modal" >
+                            Edit
+                        </button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -282,8 +281,8 @@
 
             </div> <!--END ADMIN LEFT NAVBAR-->
             <!-- USER LEFT NAVBAR -->
-            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <h3>User panel</h3>
+            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <h3>USER panel</h3>
                 <table class="table table-striped align-middle">
                     <!--       current user table  -->
                     <thead>
