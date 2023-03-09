@@ -23,6 +23,8 @@ let option = ''
 const showUsers = (users) => {
     let count = 0
     users.forEach(user => {
+        // alert(user.roles)
+        console.log('USER', user)
         results += `<tr >
                         <th>${user.id}</th>
                         <td>${user.name}</td>
@@ -30,7 +32,7 @@ const showUsers = (users) => {
                         <td>${user.age}</td>
                         <td>${user.department}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(role => role.name.substring(5))}     </td>
+                        <td>${user.roles.map(role => role.name)}     </td>
 
                         <td><button type="button" data-id="${count}" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" >
                         Edit
@@ -84,6 +86,7 @@ const showUser = (user) => {
                         <td>${user.roles.map(role => role.name.substring(5))}     </td>
                 </tr>
                 `
+        // .map(role => role.name.substring(5))
     // console.log(user.roles)
     document.getElementById("tbodyCurrentUser").innerHTML = res;
 }
@@ -184,6 +187,8 @@ function getRoles(role1, role2) {
         userRoles.push(roleUser)
     }
     // alert(userRoles)
+    // console.log(userRoles)
+    // [{id:1, name:'ROLE_ADMIN'}, {id:2, name:'ROLE_USER']
     return userRoles
 }
 
@@ -283,8 +288,7 @@ const form = document.forms["formNewUser"];
 form.addEventListener('submit', addNewUser)
 
 function addNewUser(e) {
-    // e.preventDefault()
-
+    e.preventDefault()
     fetch(url, {
         method: 'POST',
         headers: {
@@ -294,15 +298,24 @@ function addNewUser(e) {
             // id:0,
             name:form.newName.value,
             surName:form.newSurName.value,
-            age:form.age.value,
-            department:form.department.value,
-            userName:form.userName.value,
-            password:form.password.value,
+            age:form.newAge.value,
+            department:form.newDepartment.value,
+            userName:form.newUserName.value,
+            password:form.newPassword.value,
             roles:getRoles(form.roles.options[0].selected, form.roles.options[1].selected)
+
         })
     // })
 
-}).then(() => showUsers())
+// }).then(() => showUsers())
+}).then( response => response.json() )
+  // .then( data => {
+  //     let newUser1 = []
+  //     newUser1.push(data)
+  //     console.log('data', data)
+  //     showUsers(data)
+  // })
+        .then(response => location.reload())
 }
 
 

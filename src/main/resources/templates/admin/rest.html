@@ -209,7 +209,8 @@
                     <!-- <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"> -->
                     <!-- START New user -->
                     <div class="tab-pane fade" id="newUserTabContent" role="tabpanel" aria-labelledby="newUserTab">
-                        <form id="formNewUser" th:action="@{/admin}" th:object="${user}">
+<!--                        <form id="formNewUser" th:action="@{/admin}" th:object="${user}">-->
+                        <form id="formNewUser">
 
                             <h4>Add new user</h4>
 
@@ -220,32 +221,32 @@
 
                             <div class="mb-3">
                                 <label for="newName" class="form-label">Name</label>
-                                <input type="text" class="form-control"  id="newName"/>
+                                <input type="text" class="form-control" id="newName" name="newName"/>
                             </div>
 
                             <div class="mb-3">
                                 <label for="surName" class="form-label">Surname</label>
-                                <input type="text" class="form-control"  id="newSurName"/>
+                                <input type="text" class="form-control" id="newSurName" name="newSurName"/>
                             </div>
 
                             <div class="mb-3">
-                                <label for="age" class="form-label">Age</label>
-                                <input type="text" class="form-control" id="age"/>
+                                <label for="newAge" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="newAge" name="newAge"/>
                             </div>
 
                             <div class="mb-3">
-                                <label for="department" class="form-label">Department</label>
-                                <input type="text" class="form-control"  id="department"/>
+                                <label for="newDepartment" class="form-label">Department</label>
+                                <input type="text" class="form-control"  id="newDepartment" name="newDepartment"/>
                             </div>
 
                             <div class="mb-3">
-                                <label for="userName" class="form-label">Username</label>
-                                <input type="text" class="form-control"  id="userName"/>
+                                <label for="newUserName" class="form-label">Username</label>
+                                <input type="text" class="form-control"  id="newUserName" name="newUserName"/>
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control"  id="password"/>
+                                <label for="newPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control"  id="newPassword" name="newPassword"/>
                             </div>
 
                             <!-- <select id="rolesNew" th:field="*{roles}" class="form-select" multiple name="roles" size="2"
