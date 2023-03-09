@@ -32,7 +32,7 @@ const showUsers = (users) => {
                         <td>${user.age}</td>
                         <td>${user.department}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(role => role.name)}     </td>
+                        <td>${user.roles.map(role => role.name.substring(5))}     </td>
 
                         <td><button type="button" data-id="${count}" id="btnEdit" class="btn btn-primary" data-bs-toggle="modal" >
                         Edit
