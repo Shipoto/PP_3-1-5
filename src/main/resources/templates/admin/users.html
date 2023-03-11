@@ -189,13 +189,15 @@
                                                                 <div class="form-group">
                                                                     <label for="roles"><b> Roles </b></label>
 <!--                                                                    <select th:field="${roles}"-->
-                                                                    <select id="roles" name="roles" size="2" required
+                                                                    <select id="roles" th:name="roles" size="2" required
                                                                             class="form-select" multiple
                                                                             aria-label="multiple select example">
                                                                         <option th:each="role : ${roles}"
                                                                                 th:value="${role.id}"
+                                                                                th:selected="${(user.roles.toString().contains(role.name))}"
                                                                                 th:text="${role.name}">
-<!--                                                                                th:selected="${roles.contains(user.roles)}"-->
+<!--                                                                                th:text="${role.name}"-->
+
 
                                                                         </option>
                                                                     </select>
@@ -372,10 +374,9 @@
                                 <input type="password" class="form-control" th:field="*{password}" id="password"/>
                             </div>
 
-                            <select th:field="${roles}" class="form-select" multiple
+                            <select th:field="*{roles}" class="form-select" multiple
                                     aria-label="multiple select example">
                                 <option th:each="role : ${roles}"
-                                        th:selected="${user.roles.contains(role)}"
                                         th:value="${role.id}"
                                         th:text="${role.name}">
                                 </option>

@@ -39,7 +39,7 @@ const showUsers = (users) => {
                             </button></td>
 
                         <td><button type="button"  id="btnDelete" class="btn btn-danger" data-bs-toggle="modal" >
-                            Delete
+                        Delete
                             </button></td>    
                     </tr>
                     `
@@ -146,18 +146,20 @@ const on = (element, event, button, handler) => {
 on(document, 'click', '#btnDelete', e => {
     const idRow = e.target.parentNode.parentNode
     const id = idRow.firstElementChild.innerHTML
-    alertify.confirm(`Delete user with id: ${id}.`,
+    alertify.confirm(`Delete user with id : ${id}.`,
         function(){
             fetch(url+id, {
-                method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(() => location.reload())
-            //   alertify.success('Ok')
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+              .then(() => location.reload())
+              alertify.success('Ok')
         },
         function(){
-            //   alertify.error('Cancel')
-        })
+              alertify.error('Cancel')
+    });
 })
 
 // parsing consts Edit in forms

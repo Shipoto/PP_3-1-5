@@ -33,17 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 // for rest task
-
-                .antMatchers("/admin**").hasAnyRole("ADMIN")
-                .antMatchers("/user**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("api/users/**").hasAnyRole("ADMIN")
-//                .antMatchers("/api/users/**").permitAll()
-
-//                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("/admin**").hasAnyRole("ADMIN")
+//                .antMatchers("/user**").hasAnyRole("ADMIN", "USER")
+//                .antMatchers("api/users/**").hasAnyRole("ADMIN")
 
                 // for 3-1-3 task
-//                .antMatchers("/admin/**").hasRole("ADMIN")
-//                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/users/**").hasAnyRole("ADMIN", "USER")
 
                 // for 3-1-4 bootstrap task
 //                .antMatchers("/users").hasRole("ADMIN")
