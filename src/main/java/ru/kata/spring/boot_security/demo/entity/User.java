@@ -1,13 +1,19 @@
 package ru.kata.spring.boot_security.demo.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "t_user")
+@NamedEntityGraph(
+        name = "user-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("roles")})
 public class User implements UserDetails {
 
     @Id
@@ -30,21 +36,11 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection <Role> roles;
 
 
     public User() {
-    }
-
-    public User(String name, String surName, int age, String department, String userName, String password, Collection <Role> roles) {
-        this.name = name;
-        this.surName = surName;
-        this.age = age;
-        this.department = department;
-        this.userName = userName;
-        this.password = password;
-        this.roles = roles;
     }
 
     public int getId() {
@@ -104,6 +100,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
+//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
 //        return Collections.singletonList(new SimpleGrantedAuthority(this.role.toString()));
     }
 

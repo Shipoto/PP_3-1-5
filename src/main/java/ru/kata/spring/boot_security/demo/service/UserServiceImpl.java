@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(username);
         if(user == null) {
@@ -76,12 +77,15 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void update(User user) {
-        user.setId(user.getId());
+//        user.setId(user.getId());
+
         if (user.getPassword().equals(userRepository.findByUserName(user.getUsername()).getPassword())) {
             user.setPassword(user.getPassword());
         } else {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
+
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -95,7 +99,6 @@ public class UserServiceImpl implements UserService {
         if (userFromDB != null) {
             return false;
         }
-
         user.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);

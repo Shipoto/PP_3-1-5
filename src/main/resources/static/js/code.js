@@ -15,7 +15,7 @@ const submitNewUser = new bootstrap.Tab(document.querySelector('#myTab button[da
 const triggerEl = document.querySelector('#myTab button[data-bs-target="#newUserTabContent"]')
 const newUser1 = bootstrap.Tab.getInstance(triggerEl)
 
-console.log('answer' + newUser)
+// console.log('answer' + newUser)
 
 let option = ''
 
@@ -24,7 +24,7 @@ const showUsers = (users) => {
     let count = 0
     users.forEach(user => {
         // alert(user.roles)
-        console.log('USER', user)
+        // console.log('USER', user)
         results += `<tr >
                         <th>${user.id}</th>
                         <td>${user.name}</td>
@@ -119,17 +119,7 @@ const showUserById = (user) => {
     res;
 }
 
-// fetching user by ID
-const curUs = (id) => {fetch(url + id)
-    // function curUs(id) {
-    // fetch(url + id)
-    .then(res => res.json())
-    .then(data => {
-        currentUser = data;
-        // console.log("DATA", currentUser)
-        showUser(currentUser);
-    })
-}
+
 
 // BUTTONS
 // catching button
@@ -142,11 +132,42 @@ const on = (element, event, button, handler) => {
     })
 }
 
+
+
 // pushing button Delete
 on(document, 'click', '#btnDelete', e => {
     const idRow = e.target.parentNode.parentNode
     const id = idRow.firstElementChild.innerHTML
-    alertify.confirm(`Delete user with id : ${id}.`,
+
+    let modalDelete = document.querySelector('div .container.col-8.text-center')
+    const nameForm = idRow.children[1].innerHTML
+    const surNameForm = idRow.children[2].innerHTML
+    const ageForm = idRow.children[3].innerHTML
+    const departmentForm = idRow.children[4].innerHTML
+    const userNameForm = idRow.children[5].innerHTML
+    const rolesForm = idRow.children[6].innerHTML
+
+    nameEdit.value = nameForm
+    nameEdit.readOnly = true
+    surName.value = surNameForm
+    surName.readOnly = true
+    age.value = ageForm
+    age.readOnly = true
+    department.value = departmentForm
+    department.readOnly = true
+    userName.value = userNameForm
+    userName.readOnly = true
+    password.readOnly = true
+
+    roles.options[0].selected = false
+    roles.options[1].selected = false
+    roles.readOnly = true
+    if (rolesForm.includes('ADMIN')) {roles.options[0].selected = true}
+    if (rolesForm.includes('USER')) {roles.options[1].selected = true}
+
+
+    // alertify.confirm(`Delete user with id : ${id}.`,
+    alertify.confirm(modalDelete ,
         function(){
             fetch(url+id, {
                 method: 'DELETE',
@@ -158,21 +179,10 @@ on(document, 'click', '#btnDelete', e => {
               alertify.success('Ok')
         },
         function(){
+
               alertify.error('Cancel')
     });
 })
-
-// parsing consts Edit in forms
-const formUser = document.querySelector('modalEditForm')
-
-const nameEdit = document.getElementById('nameEdit')
-const surName = document.getElementById('surName')
-const age = document.getElementById('age')
-const department = document.getElementById('department')
-const userName = document.getElementById('userName')
-const password = document.getElementById('password')
-const roles = document.getElementById('rolesEdited')
-// console.log('roles', roles)
 
 // Roles for newUser
 function getRoles(role1, role2) {
@@ -188,27 +198,47 @@ function getRoles(role1, role2) {
     } if (role2) {
         userRoles.push(roleUser)
     }
-    // alert(userRoles)
-    // console.log(userRoles)
-    // [{id:1, name:'ROLE_ADMIN'}, {id:2, name:'ROLE_USER']
     return userRoles
 }
 
+
+//=========    EDIT   =====================
+// parsing consts Edit in forms
+const formUser = document.querySelector('modalEditForm')
+
+const nameEdit = document.getElementById('nameEdit')
+const surName = document.getElementById('surName')
+const age = document.getElementById('age')
+const department = document.getElementById('department')
+const userName = document.getElementById('userName')
+
+const password = document.getElementById('password')
+const roles = document.getElementById('rolesEdited')
+
+
 // pushing button Edit and scraping data from every table's row
-// let rolesForm = '';
+
 let idForm = 0;
 let formEdit = '';
 on(document, 'click', '#btnEdit', e => {
     const idRow = e.target.parentNode.parentNode
     idForm = idRow.children[0].innerHTML
     const nameForm = idRow.children[1].innerHTML
-    console.log(nameForm)
+    // console.log(nameForm)
     const surNameForm = idRow.children[2].innerHTML
     const ageForm = idRow.children[3].innerHTML
     const departmentForm = idRow.children[4].innerHTML
     const userNameForm = idRow.children[5].innerHTML
-    const rolesForm = idRow.children[6].innerHTML
 
+    let passwordForm = (id) => {
+        fetch(url + id)
+            .then(res => res.json())
+            .then(data => {
+                password.value = data.password
+            })
+    }
+
+    const rolesForm = idRow.children[6].innerHTML
     const count_id = idRow.children[7].children[0].getAttribute('data-id')
 
     // typing data in fields modal's window
@@ -217,6 +247,7 @@ on(document, 'click', '#btnEdit', e => {
     age.value = ageForm
     department.value = departmentForm
     userName.value = userNameForm
+    passwordForm(idForm)
 
     roles.options[0].selected = false
     roles.options[1].selected = false
@@ -227,7 +258,6 @@ on(document, 'click', '#btnEdit', e => {
     editModal.show()
     formEdit = document.forms["modalEditForm"];
     formEdit.addEventListener('submit', saveEditedUser)
-    // alert(formEdit)
 
     function showUsersString(name, surName, age, department, userName, roles, count_id) {
         // console.log(roles)
@@ -256,6 +286,7 @@ on(document, 'click', '#btnEdit', e => {
                 age: formEdit.age.value,
                 department: formEdit.department.value,
                 userName: formEdit.userName.value,
+                password: formEdit.password.value,
                 roles: getRoles(formEdit.roles.options[0].selected,
                     formEdit.roles.options[1].selected)
             })
@@ -268,12 +299,13 @@ on(document, 'click', '#btnEdit', e => {
             formEdit.department.value,
             formEdit.userName.value,
             getRoles(formEdit.roles.options[0].selected,
-                formEdit.roles.options[1].selected),
+                     formEdit.roles.options[1].selected),
             count_id
         ))
         // })
         // .then(response => response.json())
         // .then(response => window.location.reload())
+        // editModal.empty()
         editModal.hide()
     }
 })
@@ -311,13 +343,7 @@ function addNewUser(e) {
 
 // }).then(() => showUsers())
 }).then( response => response.json() )
-  // .then( data => {
-  //     let newUser1 = []
-  //     newUser1.push(data)
-  //     console.log('data', data)
-  //     showUsers(data)
-  // })
-        .then(response => location.reload())
+  .then(response => location.reload())
 }
 
 

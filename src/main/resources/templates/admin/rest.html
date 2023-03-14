@@ -112,10 +112,6 @@
                             </div>
                         </div>
 
-                        <!--  <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                         th:id="editModal" th:data-bs-target="#editModal">Edit
-                                 </button> -->
-
                         <!-- =========================== END TABLE=================================-->
 
                         <!-- =========================== EDIT MODAL WINDOW=================================-->
@@ -162,18 +158,12 @@
                                                     <label for="userName"><b> userName </b></label>
                                                     <input id="userName" class="form-control" type="text" placeholder="username"  />
                                                 </div>
-                                                <!-- <div class="form-group">
+                                                <div class="form-group">
                                                     <label for="password"><b> Password </b></label>
-                                                    <input id="password" class="form-control" type="password" placeholder="password"
-                                                        th:value="${user.password}" th:name="password" />
-                                                </div> -->
+                                                    <input id="password" class="form-control" type="password" placeholder="password"/>
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="rolesEdited"><b> Roles </b></label>
-                                                    <!-- <select th:field="*{roles}" class="form-select" id="roles" multiple name="roles" size="2"
-                                                        aria-label="multiple select example">
-                                                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}">
-                                                        </option>
-                                                    </select> -->
 
                                                     <select class="form-select"
                                                             name="roles"
