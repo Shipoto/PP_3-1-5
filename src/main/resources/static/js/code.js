@@ -136,6 +136,7 @@ const on = (element, event, button, handler) => {
 
 // pushing button Delete
 on(document, 'click', '#btnDelete', e => {
+    // e.preventDefault()
     const idRow = e.target.parentNode.parentNode
     const id = idRow.firstElementChild.innerHTML
 
@@ -175,11 +176,12 @@ on(document, 'click', '#btnDelete', e => {
                     'Content-Type': 'application/json'
                 }
             }).then(res => res.json())
-              .then(() => location.reload())
+              location.reload()
               alertify.success('Ok')
+
         },
         function(){
-
+              location.reload()
               alertify.error('Cancel')
     });
 })
@@ -290,6 +292,7 @@ on(document, 'click', '#btnEdit', e => {
                 roles: getRoles(formEdit.roles.options[0].selected,
                     formEdit.roles.options[1].selected)
             })
+
             // })
             // =========== RELOAD ONE STRING =============
         }).then(() => showUsersString(
@@ -302,6 +305,8 @@ on(document, 'click', '#btnEdit', e => {
                      formEdit.roles.options[1].selected),
             count_id
         ))
+
+
         // })
         // .then(response => response.json())
         // .then(response => window.location.reload())
